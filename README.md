@@ -29,7 +29,7 @@ Servers
 Firefox
 -------
 
-Set Advanced > Network > Connection > Settings > Manual Proxy configuration
+Preferences -> Advanced > Network > Connection > Settings > Manual Proxy configuration
 
 	HTTP Proxy:	exit.li	8080
 
