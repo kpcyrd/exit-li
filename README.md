@@ -21,10 +21,10 @@ All servers are connected to an anonymous vpn to exit the traffic. We don't moni
 Servers
 -------
 
-	exit.li												all servers below
-	seed.exit.li				kpcyrd		DE, debian	fc00:0000:0000:0000
-	carnivore.exit.li			kpcyrd		NL, openbsd	fc00:0000:0000:0000
-	breathingmanually.exit.li	kpcyrd		NL, debian	fc00:0000:0000:0000
+	exit.li                                             all servers below
+	seed.exit.li                kpcyrd      DE, debian  fc1f:ab0e:6eb8:780c:68af:4eb7:d8aa:b0fd
+	carnivore.exit.li           kpcyrd      NL, openbsd fc07:90e1:a1d4:498a:6d55:8348:34f9:bdcb
+	breathingmanually.exit.li   kpcyrd      NL, ubuntu  fc9d:c635:e53a:6c41:3916:de8a:94e2:b435
 
 Firefox
 -------
