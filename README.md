@@ -45,3 +45,10 @@ Tor
     HTTPSProxy          exit.li:8080
     ReachableAddresses  accept *:443
 
+SSH
+---
+
+    aptitude install connect-proxy
+
+    ProxyCommand connect-proxy -H exit.li:8080 %h %p
+
