@@ -41,6 +41,7 @@ By default, Chrome/Chromium uses the system/OS proxy configuration. This can be 
 Tor
 ---
 
-	HTTPProxy	exit.li:8080
-	HTTPSProxy	exit.li:8080
+    HTTPProxy           exit.li:8080
+    HTTPSProxy          exit.li:8080
+    ReachableAddresses  accept *:443
 
