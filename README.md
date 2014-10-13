@@ -36,7 +36,7 @@ Preferences -> Advanced > Network > Connection > Settings > Manual Proxy configu
 Chromium
 --------
 
-By default, Chrome/Chromium uses the system/OS proxy configuration. This can be changed with an extension such as [FoxyProxy](https://chrome.google.com/webstore/detail/foxyproxy-standard/gcknhkkoolaabfmlnjonogaaifnjlfnp?hl=en) or via the commandline, documented [here](http://www.chromium.org/developers/design-documents/network-settings)
+By default, Chrome/Chromium uses the system/OS proxy configuration. This can be changed with an extension such as [FoxyProxy](https://chrome.google.com/webstore/detail/foxyproxy-standard/gcknhkkoolaabfmlnjonogaaifnjlfnp?hl=en) or via the commandline, documented [here](http://www.chromium.org/developers/design-documents/network-settings).
 
 Tor
 ---
