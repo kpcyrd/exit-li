@@ -1,6 +1,8 @@
 exit.li
 =======
 
+![exit.li](/exit.png)
+
 This is a free proxy service for the hyperboria community.
 
 It allows to access clearnet services over hyperboria. [cjdns](1) is required for this.
