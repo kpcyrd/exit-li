@@ -1,6 +1,7 @@
 #!/usr/bin/env js
 var http = require('http');
 var net = require('net');
+var fs = require('fs');
 
 var ALLOWED = [
     'example.com:80'
@@ -36,6 +37,21 @@ http.createServer(function(req, res) {
         console.log('[-] denied to', dest);
         socket.end('HTTP/1.1 403 Nope\n\n');
     });
-}).listen(1337, '::', function() {
+}).listen(8080, '::', function() {
     console.log('[+] proxy up');
+});
+
+fs.readFile('index.html', function(err, data) {
+    if(err) return;
+
+    http.createServer(function(req, res) {
+        if(req.url == '/') {
+            res.end(data);
+        } else {
+            res.writeHead(404, {'Content-Type': 'text/plain'});
+            res.end('404\n');
+        }
+    }).listen(80, '::', function() {
+        console.log('[+] index up');
+    });
 });
