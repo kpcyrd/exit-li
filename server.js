@@ -46,9 +46,10 @@ fs.readFile('index.html', function(err, data) {
 
     http.createServer(function(req, res) {
         if(req.url == '/') {
+            res.writeHead(200, {'Content-Type': 'text/plain; charset=utf-8'});
             res.end(data);
         } else {
-            res.writeHead(404, {'Content-Type': 'text/plain'});
+            res.writeHead(404, {'Content-Type': 'text/plain; charset=utf-8'});
             res.end('404\n');
         }
     }).listen(80, '::', function() {
