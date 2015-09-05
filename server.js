@@ -3,15 +3,35 @@ var http = require('http');
 var net = require('net');
 var fs = require('fs');
 
-var ALLOWED = [
-    'example.com:80'
-];
+var redis = require('redis');
 
-var auth = function(dest, allow, deny) {
+
+var check = function(client, key, ok, fail) {
+    client.exists(key, function(err, reply) {
+        if(reply === 1) {
+            ok();
+        } else {
+            fail();
+        }
+    });
+};
+
+var auth = function(client, dest, allow, deny) {
     var m = dest.match(/^([a-z0-9\.]+):(\d+)$/);
 
-    if(m && ~ALLOWED.indexOf(dest)) {
-        allow(m[1], parseInt(m[2]));
+    if(m) {
+        var host = m[1];
+        var port = parseInt(m[2]);
+
+        check(client, host + ':' + port, function() {
+            console.log('[+] allowed by dest', dest);
+            allow(host, port);
+        }, function() {
+            check(client, ':' + port, function() {
+                console.log('[+] allowed by port', dest);
+                allow(host, port);
+            }, deny);
+        });
     } else {
         deny();
     }
@@ -23,19 +43,22 @@ http.createServer(function(req, res) {
     var dest = req.url;
     console.log('[*] request to', dest);
 
-    // check destination
-    auth(dest, function(host, port) {
-        socket.write('HTTP/1.1 200 OK\n\n');
+    var client = redis.createClient();
+    client.on('connect', function() {
+        // check destination
+        auth(client, dest, function(host, port) {
+            socket.write('HTTP/1.1 200 OK\n\n');
 
-        // cross the streams
-        var c = net.connect({host: host, port: port}, function() {
-            console.log('[+] connected to', dest);
-            c.pipe(socket);
-            socket.pipe(c);
+            // cross the streams
+            var c = net.connect({host: host, port: port}, function() {
+                console.log('[+] connected to', dest);
+                c.pipe(socket);
+                socket.pipe(c);
+            });
+        }, function() {
+            console.log('[-] denied to', dest);
+            socket.end('HTTP/1.1 403 Nope\n\n');
         });
-    }, function() {
-        console.log('[-] denied to', dest);
-        socket.end('HTTP/1.1 403 Nope\n\n');
     });
 }).listen(8080, '::', function() {
     console.log('[+] proxy up');
