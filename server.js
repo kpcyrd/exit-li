@@ -48,6 +48,9 @@ fs.readFile('index.html', function(err, data) {
         if(req.url == '/') {
             res.writeHead(200, {'Content-Type': 'text/plain; charset=utf-8'});
             res.end(data);
+        } else if(req.url == '/robots.txt') {
+            res.writeHead(200, {'Content-Type': 'text/plain; charset=utf-8'});
+            res.end('User-agent: *\nDisallow: /\n');
         } else {
             res.writeHead(404, {'Content-Type': 'text/plain; charset=utf-8'});
             res.end('404\n');
