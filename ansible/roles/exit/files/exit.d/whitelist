@@ -1,0 +1,3 @@
+#!/bin/sh
+echo ftp.debian.org:80
+echo :5222

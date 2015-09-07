@@ -1,0 +1,15 @@
+---
+- lineinfile: dest=/etc/modules line="tun"
+- modprobe: name=tun state=present
+- git: repo=https://github.com/cjdelisle/cjdns.git dest=/opt/cjdns depth=5
+  register: clone
+- shell: Seccomp_NO=1 /opt/cjdns/do
+  when: clone.changed
+- file: src=/opt/cjdns/cjdroute dest=/usr/bin/cjdroute state=link
+- file: src=/opt/cjdns/contrib/systemd/cjdns.service dest=/etc/systemd/system/cjdns.service state=link
+- template: src=cjdroute.conf dest=/etc/cjdroute.conf owner=root group=root mode=0600
+  register: config
+- service: name=cjdns state=restarted
+  when: clone.changed or config.changed
+- file: src=../cjdns.service dest=/etc/systemd/system/multi-user.target.wants/cjdns.service state=link
+- service: name=cjdns state=started

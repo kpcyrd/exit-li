@@ -1,0 +1,13 @@
+---
+pkgs:
+  - vim
+  - kmod
+  - iptables-persistent
+  - build-essential
+  - nodejs
+  - git
+  - htop
+  - vnstat
+  - netcat-openbsd
+  - node-redis
+  - python-redis

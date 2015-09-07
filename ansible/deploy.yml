@@ -1,0 +1,9 @@
+- name: deploy exit nodes
+  hosts: all
+  gather_facts: no
+  roles:
+    - common
+    - redis
+    - cjdns
+    - info
+    - exit

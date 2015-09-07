@@ -1,0 +1,16 @@
+- file: path=/etc/exit.d state=directory
+- copy: src=exit.d/{{ item }} dest=/etc/exit.d/{{ item }} mode=0755
+  with_items:
+    - tor
+    - whitelist
+
+- file: path=/opt/exit state=directory
+- copy: src=exit.js dest=/opt/exit/exit.js mode=0755
+  register: server
+- copy: src=acl.py dest=/opt/exit/acl.py mode=0755
+- copy: src=reload.sh dest=/etc/cron.daily/exit
+- copy: src=exit.service dest=/etc/systemd/system/exit.service
+- service: name=exit state=restarted
+  when: server.changed
+- file: src=../exit.service dest=/etc/systemd/system/multi-user.target.wants/exit.service state=link
+- service: name=exit state=started

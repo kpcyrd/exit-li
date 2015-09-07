@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>{{ cjdns_ingress_addr }}</title>
+    </head>
+    <body>
+        <h1>{{ cjdns_ingress_addr }}</h1>
+
+        <p>
+            This server is proxying traffic from mesh networks into the internet.
+        </p>
+
+        <p>
+            Report abuse to
+            <i>abuse µ exit.li</i>
+        </p>
+
+<pre>
+"{{ cjdns_ingress_addr }}:{{ cjdns_ingress_port }}":{"publicKey": "{{ cjdns_publicKey }}", "password": "{{ cjdns_ingress_pw }}"}
+</pre>
+    </body>
+</html>

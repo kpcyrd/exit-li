@@ -1,0 +1,14 @@
+---
+- apt: update_cache=yes cache_valid_time=3600
+  register: update
+- apt: upgrade=dist
+  when: update.changed
+- apt: pkg={{ item }} state=present
+  with_items: pkgs
+- copy: src={{ item }} dest=/etc/iptables/{{ item }}
+  with_items:
+    - rules.v4
+    - rules.v6
+  register: firewall
+- service: name=netfilter-persistent state=restarted enabled=true
+  when: firewall.changed

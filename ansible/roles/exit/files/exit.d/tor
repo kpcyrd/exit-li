@@ -1,0 +1,11 @@
+#!/bin/sh
+curl -s https://torstatus.blutmagie.de/query_export.php/Tor_query_EXPORT.csv | \
+python -c '
+import csv, sys
+f = csv.reader(sys.stdin, delimiter=",")
+for x in f:
+    ip, _, orport, dirport = x[4:8]
+    for port in [orport, dirport]:
+        if ip and port not in ["None", "ORPort", "DirPort"]:
+            print(ip + ":" + port)
+'
