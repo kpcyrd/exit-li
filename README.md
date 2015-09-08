@@ -5,7 +5,7 @@ exit.li
 
 This is a free proxy service for the hyperboria community.
 
-It allows to access clearnet services over hyperboria. [cjdns](1) is required for this.
+It allows to access clearnet services over hyperboria. [cjdns][1] is required for this.
 
 [1]: https://github.com/cjdelisle/cjdns
 
