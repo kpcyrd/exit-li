@@ -3,12 +3,15 @@
   with_items:
     - tor
     - whitelist
+  register: rules
 
 - file: path=/opt/exit state=directory
 - copy: src=exit.js dest=/opt/exit/exit.js mode=0755
   register: server
 - copy: src=acl.py dest=/opt/exit/acl.py mode=0755
-- copy: src=reload.sh dest=/etc/cron.daily/exit
+- copy: src=reload.sh dest=/etc/cron.daily/exit mode=0755
+- shell: /etc/cron.daily/exit
+  when: rules.changed
 - copy: src=exit.service dest=/etc/systemd/system/exit.service
 - service: name=exit state=restarted
   when: server.changed
