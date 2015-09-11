@@ -1,4 +1,4 @@
-- name: deploy exit nodes
+- name: provision exit nodes
   hosts: all
   gather_facts: no
   roles:
