@@ -13,8 +13,8 @@ def main():
     r = Redis()
     for dest in sys.stdin:
         dest = dest.strip()
-        print('allowing %r' % dest)
         allow(r, dest, 2 * DAY)
+        print(dest)
 
 if __name__ == '__main__':
     main()
