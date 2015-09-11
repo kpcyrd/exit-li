@@ -18,7 +18,7 @@ Servers
 Tor
 ---
 
-    HTTPProxy           exit.li:8080 # this doesn't tested yet
+    HTTPProxy           exit.li:8080
     HTTPSProxy          exit.li:8080
 
 XMPP
