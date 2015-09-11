@@ -47,6 +47,7 @@ http.createServer(function(req, res) {
     client.on('connect', function() {
         // check destination
         auth(client, dest, function(host, port) {
+            client.quit();
             socket.write('HTTP/1.1 200 OK\r\n\r\n');
 
             // cross the streams
@@ -56,6 +57,7 @@ http.createServer(function(req, res) {
                 socket.pipe(c);
             });
         }, function() {
+            client.quit();
             console.log('[-] denied to', dest);
             socket.end('HTTP/1.1 403 Nope\r\n\r\n');
         });
