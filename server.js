@@ -47,7 +47,7 @@ http.createServer(function(req, res) {
     client.on('connect', function() {
         // check destination
         auth(client, dest, function(host, port) {
-            socket.write('HTTP/1.1 200 OK\n\n');
+            socket.write('HTTP/1.1 200 OK\r\n\r\n');
 
             // cross the streams
             var c = net.connect({host: host, port: port}, function() {
@@ -57,7 +57,7 @@ http.createServer(function(req, res) {
             });
         }, function() {
             console.log('[-] denied to', dest);
-            socket.end('HTTP/1.1 403 Nope\n\n');
+            socket.end('HTTP/1.1 403 Nope\r\n\r\n');
         });
     });
 }).listen(8080, '::', function() {
