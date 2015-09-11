@@ -1,0 +1,5 @@
+- name: deploy exit nodes
+  hosts: all
+  gather_facts: no
+  roles:
+    - exit
