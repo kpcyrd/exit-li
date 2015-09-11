@@ -56,6 +56,10 @@ http.createServer(function(req, res) {
                 c.pipe(socket);
                 socket.pipe(c);
             });
+            c.on('error', function(err) {
+                console.log('[-] connection failed', dest, err['errno']);
+                socket.end();
+            });
         }, function() {
             client.quit();
             console.log('[-] denied to', dest);
