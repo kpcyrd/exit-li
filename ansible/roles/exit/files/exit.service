@@ -1,5 +1,5 @@
 [Unit]
-Description=exit: weeeeeee
+Description=exit: #yolo
 Wants=network.target
 After=network.target
 
