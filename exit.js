@@ -1,7 +1,6 @@
 #!/usr/bin/env js
 var http = require('http');
 var net = require('net');
-var fs = require('fs');
 
 var redis = require('redis');
 
@@ -68,23 +67,4 @@ http.createServer(function(req, res) {
     });
 }).listen(8080, '::', function() {
     console.log('[+] proxy up');
-});
-
-fs.readFile('index.html', function(err, data) {
-    if(err) return;
-
-    http.createServer(function(req, res) {
-        if(req.url == '/') {
-            res.writeHead(200, {'Content-Type': 'text/plain; charset=utf-8'});
-            res.end(data);
-        } else if(req.url == '/robots.txt') {
-            res.writeHead(200, {'Content-Type': 'text/plain; charset=utf-8'});
-            res.end('User-agent: *\nDisallow: /\n');
-        } else {
-            res.writeHead(404, {'Content-Type': 'text/plain; charset=utf-8'});
-            res.end('404\n');
-        }
-    }).listen(80, '::', function() {
-        console.log('[+] index up');
-    });
 });
