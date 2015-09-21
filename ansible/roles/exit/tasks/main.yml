@@ -8,6 +8,7 @@
   with_items:
     - tor
     - whitelist
+    - github
   register: rules
 - shell: /etc/cron.daily/exit
   when: rules.changed
