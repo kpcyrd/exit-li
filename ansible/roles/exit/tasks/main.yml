@@ -4,12 +4,7 @@
   register: server
 - copy: src=allow.py dest=/opt/exit/allow.py mode=0755
 - copy: src=reload.sh dest=/etc/cron.daily/exit mode=0755
-- copy: src=exit.d/{{ item }} dest=/etc/exit.d/{{ item }} mode=0755
-  with_items:
-    - tor
-    - xmpp
-    - debian
-    - github
+- unarchive: src=exit.d.tar.xz dest=/etc
   register: rules
 - shell: /etc/cron.daily/exit
   when: rules.changed
