@@ -7,7 +7,8 @@
 - copy: src=exit.d/{{ item }} dest=/etc/exit.d/{{ item }} mode=0755
   with_items:
     - tor
-    - whitelist
+    - xmpp
+    - debian
     - github
   register: rules
 - shell: /etc/cron.daily/exit
