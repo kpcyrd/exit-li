@@ -1,22 +1,58 @@
 #!/usr/bin/env python
 import requests
-import csv
+import random
 
-url = 'https://torstatus.blutmagie.de/query_export.php/Tor_query_EXPORT.csv'
-r = requests.get(url, stream=True)
+AUTHORITIES = [
+    'http://171.25.193.9:443/tor/status-vote/current/consensus',
+    'http://86.59.21.38/tor/status-vote/current/consensus',
+    'http://199.254.238.52/tor/status-vote/current/consensus',
+    'http://194.109.206.212/tor/status-vote/current/consensus',
+    'http://131.188.40.189/tor/status-vote/current/consensus',
+    'http://128.31.0.34:9131/tor/status-vote/current/consensus',
+    'http://193.23.244.244/tor/status-vote/current/consensus',
+    'http://154.35.175.225/tor/status-vote/current/consensus'
+]
 
-def wrap(f):
-    for x in f:
-        yield str(x, 'utf-8')
+random.shuffle(AUTHORITIES)
 
-for x in csv.DictReader(wrap(r.raw)):
-    ip = x['IP Address']
-    orport = x['ORPort']
-    dirport = x['DirPort']
+
+def parse_descriptor(line):
+    ip, orport, dirport = line.split(' ')[6:9]
 
     for port in [orport, dirport]:
-        if ip and port:
-            try:
-                print('%s:%d' % (ip, int(port)))
-            except ValueError:
-                pass
+        port = int(port)
+        if port:
+            yield (ip, port)
+
+
+def stream_consensus(url):
+    r = requests.get(url, stream=True)
+    for line in r.raw:
+        yield str(line, 'ascii')
+
+
+def stream_descriptors(url):
+    for line in stream_consensus(url):
+        if not line.startswith('r '):
+            continue
+
+        try:
+            for dest in parse_descriptor(line):
+                yield dest
+        except:
+            pass
+
+
+def main():
+    for auth in AUTHORITIES:
+        try:
+            for dest in stream_descriptors(auth):
+                print('%s:%d' % dest)
+        except:
+            pass
+        else:
+            break
+
+
+if __name__ == '__main__':
+    main()
