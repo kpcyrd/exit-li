@@ -11,4 +11,4 @@ pkgs:
   - netcat-openbsd
   - node-redis
   - python-redis
-  - python-requests
+  - python3-requests
