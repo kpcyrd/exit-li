@@ -8,6 +8,7 @@ pkgs:
   - git
   - htop
   - vnstat
+  - nload
   - netcat-openbsd
   - node-redis
   - python-redis
