@@ -7,4 +7,5 @@ while read pkg; do
 done | sed -e 's/^#Server = //' | grep ^https:// | cut -d/ -f 3 | \
 while read mirror; do
     echo "$mirror:443"
+    echo "$mirror:873"
 done
