@@ -1,5 +1,6 @@
 ---
 pkgs:
+  - aptitude
   - vim
   - kmod
   - iptables-persistent
