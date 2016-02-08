@@ -3,7 +3,7 @@ BASE=https://mirror.fs.cx/archlinux/core/os/x86_64/
 
 curl -s -- $BASE | grep -Po 'pacman-mirror[^>]+.tar.xz' | uniq | \
 while read pkg; do
-    curl -s -- $BASE/$pkg | tar xOfJ - etc/pacman.d/mirrorlist
+    curl -s -- "$BASE/$pkg" | tar xOfJ - etc/pacman.d/mirrorlist
 done | sed -e 's/^#Server = //' | grep ^https:// | cut -d/ -f 3 | \
 while read mirror; do
     echo "$mirror:443"

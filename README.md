@@ -35,5 +35,5 @@ Direct Peering
 It's possible to get direct peering to the proxy servers. Make sure you're already connected to hyperboria or the following code won't work.
 
 ```sh
-for ip in `dig +short exit.li AAAA`; do curl -s http://[$ip]/ | grep publicKey; done
+for ip in `dig +short exit.li AAAA`; do curl -s "http://[$ip]/" | grep publicKey; done
 ```
