@@ -1,4 +1,5 @@
-yeti.v4.exit.li
-anything.v4.exit.li
-decay.v4.exit.li
-rainbow.v4.exit.li
+[exit.li]
+yeti        ansible_host=yeti.v4.exit.li
+anything    ansible_host=anything.v4.exit.li
+decay       ansible_host=decay.v4.exit.li
+rainbow     ansible_host=rainbow.v4.exit.li
