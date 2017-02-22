@@ -1,9 +1,39 @@
-- name: provision exit nodes
+---
+
+- name: upgrade all servers
   hosts: all
   gather_facts: no
   roles:
-    - common
-    - redis
-    - cjdns
-    - info
-    - exit
+    - { role: upgrade, tags: ['upgrade'] }
+
+- name: setup common environment
+  hosts: all
+  gather_facts: no
+  roles:
+    - { role: common, tags: ['common'] }
+
+- name: setup redis
+  hosts: all
+  gather_facts: no
+  roles:
+    - { role: redis, tags: ['redis'] }
+
+- name: setup cjdns
+  hosts: all
+  gather_facts: no
+  roles:
+    - { role: cjdns, tags: ['cjdns'] }
+
+- name: setup info page
+  hosts: all
+  gather_facts: no
+  roles:
+    - { role: info, tags: ['info'] }
+
+- name: setup exit
+  hosts: all
+  gather_facts: no
+  roles:
+    - { role: exit, tags: ['exit'] }
+
+...
