@@ -1,15 +1,64 @@
-- file: path=/etc/exit.d state=directory
-- file: path=/opt/exit state=directory
-- copy: src=exit.js dest=/opt/exit/exit.js mode=0755
+---
+
+- name: create /etc/exit.d/
+  file:
+    path: /etc/exit.d
+    state: directory
+
+- name: create /opt/exit/
+  file:
+    path: /opt/exit
+    state: directory
+
+- name: install exit.js
+  copy:
+    src: exit.js
+    dest: /opt/exit/exit.js
+    mode: "0755"
   register: server
-- copy: src=allow.py dest=/opt/exit/allow.py mode=0755
-- copy: src=reload.sh dest=/etc/cron.daily/exit mode=0755
-- unarchive: src=exit.d.tar.xz dest=/etc
+
+- name: install allow.py
+  copy:
+    src: allow.py
+    dest: /opt/exit/allow.py
+    mode: "0755"
+
+- name: install reload.sh
+  copy:
+    src: reload.sh
+    dest: /etc/cron.daily/exit
+    mode: "0755"
+
+- name: install exit.d.tar.xz
+  unarchive:
+    src: exit.d.tar.xz
+    dest: /etc
   register: rules
-- shell: /etc/cron.daily/exit
+
+- name: load exit rules
+  shell: /etc/cron.daily/exit
   when: rules.changed
-- copy: src=exit.service dest=/etc/systemd/system/exit.service
-- service: name=exit state=restarted
+
+- name: install exit.service
+  copy:
+    src: exit.service
+    dest: /etc/systemd/system/exit.service
+
+- name: restart exit
+  service:
+    name: exit
+    state: restarted
   when: server.changed
-- file: src=../exit.service dest=/etc/systemd/system/multi-user.target.wants/exit.service state=link
-- service: name=exit state=started
+
+- name: start exit on boot
+  file:
+    src: ../exit.service
+    dest: /etc/systemd/system/multi-user.target.wants/exit.service
+    state: link
+
+- name: restart exit
+  service:
+    name: exit
+    state: started
+
+...
