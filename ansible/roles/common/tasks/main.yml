@@ -1,15 +1,24 @@
 ---
+
 - name: install packages
-  apt: pkg={{ pkgs }} state=present
+  apt:
+    pkg: "{{ pkgs }}"
+    state: present
 
 - name: install iptables
-  template: src={{ item }} dest=/etc/iptables/{{ item }}
+  template:
+    src: "{{ item }}"
+    dest: "/etc/iptables/{{ item }}"
   with_items:
     - rules.v4
     - rules.v6
   register: firewall
 
 - name: apply firewall
-  service: name=netfilter-persistent state=restarted enabled=true
+  service:
+    name: netfilter-persistent
+    state: restarted
+    enabled: true
   when: firewall.changed
+
 ...
