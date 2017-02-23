@@ -20,6 +20,7 @@ peering:
     name: yeti
     addr: "{{ secrets.yeti.addr }}"
     port: "{{ secrets.yeti.port }}"
+    ipv6: fcbd:5668:fe09:43a:d838:181:6b51:ba5e
     pubkey: 9jkygq92fxg3bpm7bp466gfvzg2vff5gb68uxpkg386yq8rdd5b0.k
     password: "{{ secrets.yeti.password }}"
 
@@ -27,6 +28,7 @@ peering:
     name: anything
     addr: "{{ secrets.anything.addr }}"
     port: "{{ secrets.anything.port }}"
+    ipv6: fc08:fa0c:d028:6e88:c682:78a4:1f8a:e01b
     pubkey: lznblb9c6v0c0q1jgv9dw0y0judyl9hqjf52sg2p4jxkdvvlntv0.k
     password: "{{ secrets.anything.password }}"
 
@@ -34,6 +36,7 @@ peering:
     name: decay
     addr: "{{ secrets.decay.addr }}"
     port: "{{ secrets.decay.port }}"
+    ipv6: fce5:b02f:2e14:66b5:f7c8:3228:8a2b:ba55
     pubkey: jp575vqc9jzuyn4psn83gj4vkwtc131lc9hjg1gfp00p97s0wjd0.k
     password: "{{ secrets.decay.password }}"
 
@@ -41,6 +44,7 @@ peering:
     name: rainbow
     addr: "{{ secrets.rainbow.addr }}"
     port: "{{ secrets.rainbow.port }}"
+    ipv6: fc46:d480:61bb:658e:8936:4547:70ea:f628
     pubkey: kfjg05894y5fv1fmz2dqu30dq12k3p2qycxy7sprymr3mqz52130.k
     password: "{{ secrets.rainbow.password }}"
 ...

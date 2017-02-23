@@ -1,15 +1,70 @@
 ---
-- lineinfile: dest=/etc/modules line="tun"
-- modprobe: name=tun state=present
-- git: repo=https://github.com/cjdelisle/cjdns.git dest=/opt/cjdns depth=5
-  register: clone
-- shell: Seccomp_NO=1 /opt/cjdns/do
-  when: clone.changed
-- file: src=/opt/cjdns/cjdroute dest=/usr/bin/cjdroute state=link
-- file: src=/opt/cjdns/contrib/systemd/cjdns.service dest=/etc/systemd/system/cjdns.service state=link
-- template: src=cjdroute.conf dest=/etc/cjdroute.conf owner=root group=root mode=0600
+
+- name: enable tun on boot
+  lineinfile:
+    dest: /etc/modules
+    line: "tun"
+
+- name: enable tun
+  modprobe:
+    name: tun
+    state: present
+
+- name: install cjdroute.conf
+  template:
+    src: cjdroute.conf
+    dest: /etc/cjdroute.conf
+    owner: root
+    group: root
+    mode: "0600"
   register: config
-- service: name=cjdns state=restarted
+
+- name: clone repo
+  git:
+    repo: https://github.com/cjdelisle/cjdns.git
+    dest: /opt/cjdns
+    depth: 5
+  register: clone
+
+- name: compile (with seccomp)
+  shell: nodejs /opt/cjdns/node_build/make.js
+  args:
+    chdir: /opt/cjdns
+  when: cjdns.seccomp|default(True) and clone.changed
+
+- name: compile (without seccomp)
+  shell: Seccomp_NO=1 nodejs /opt/cjdns/node_build/make.js
+  args:
+    chdir: /opt/cjdns
+  when: not cjdns.seccomp|default(True) and clone.changed
+
+- name: symlink cjdroute to /usr/bin/cjdroute
+  file:
+    src: /opt/cjdns/cjdroute
+    dest: /usr/bin/cjdroute
+    state: link
+
+- name: install cjdns.service
+  file:
+    src: /opt/cjdns/contrib/systemd/cjdns.service
+    dest: /etc/systemd/system/cjdns.service
+    state: link
+
+- name: restart cjdns
+  service:
+    name: cjdns
+    state: restarted
   when: clone.changed or config.changed
-- file: src=../cjdns.service dest=/etc/systemd/system/multi-user.target.wants/cjdns.service state=link
-- service: name=cjdns state=started
+
+- name: start cjdns on boot
+  file:
+    src: ../cjdns.service
+    dest: /etc/systemd/system/multi-user.target.wants/cjdns.service
+    state: link
+
+- name: start cjdns
+  service:
+    name: cjdns
+    state: started
+
+...
