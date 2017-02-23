@@ -2,10 +2,10 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>{{ cjdns_ingress_addr }}</title>
+        <title>{{ inventory_hostname }}.exit.li</title>
     </head>
     <body>
-        <h1>{{ cjdns_ingress_addr }}</h1>
+        <h1>{{ inventory_hostname }}.exit.li</h1>
 
         <p>
             This server is proxying traffic from mesh networks into the internet.
@@ -17,7 +17,7 @@
         </p>
 
 <pre>
-"{{ cjdns_ingress_addr }}:{{ cjdns_ingress_port }}":{"publicKey": "{{ cjdns_publicKey }}", "password": "{{ cjdns_ingress_pw }}"}
+"{{ peering[inventory_hostname].addr }}:{{ peering[inventory_hostname].port }}":{"publicKey": "{{ peering[inventory_hostname].pubkey }}", "password": "{{ peering[inventory_hostname].password }}"}
 </pre>
     </body>
 </html>

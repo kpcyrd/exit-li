@@ -1,8 +1,35 @@
-- apt: pkg=nginx-light
-- lineinfile: dest=/etc/nginx/nginx.conf regexp="^\s*#? ?server_tokens" line="server_tokens off;"
+---
+
+- name: install nginx
+  apt:
+    pkg: nginx-light
+
+- name: disable server_tokens
+  lineinfile:
+    dest: /etc/nginx/nginx.conf
+    regexp: "^\\s*#? ?server_tokens"
+    line: "server_tokens off;"
   register: config
-- service: name=nginx state=restarted
+
+- name: restart nginx
+  service:
+    name: nginx
+    state: restarted
   when: config.changed
-- file: path={{ www }}/index.nginx-debian.html state=absent
-- template: src=index.html dest={{ www }}/index.html
-- copy: src=robots.txt dest={{ www }}/robots.txt
+
+- name: delete index.nginx-debian.html
+  file:
+    path: "{{ www }}/index.nginx-debian.html"
+    state: absent
+
+- name: install index.html
+  template:
+    src: index.html
+    dest: "{{ www }}/index.html"
+
+- name: install robots.txt
+  copy:
+    src: robots.txt
+    dest: "{{ www }}/robots.txt"
+
+...
