@@ -7,6 +7,6 @@
 -A INPUT -i tun0 -j ACCEPT
 -A OUTPUT -o lo -j ACCEPT
 -A OUTPUT -o tun0 -j ACCEPT
--A OUTPUT -j REJECT
+-A OUTPUT -j REJECT --reject-with icmp6-port-unreachable
 COMMIT
 # Completed on Sun Sep  6 15:53:23 2015

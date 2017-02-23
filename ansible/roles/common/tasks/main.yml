@@ -1,12 +1,15 @@
 ---
-- apt: update_cache=yes cache_valid_time=3600
-- apt: pkg={{ item }} state=present
-  with_items: pkgs
-- apt: upgrade=yes
-- template: src={{ item }} dest=/etc/iptables/{{ item }}
+- name: install packages
+  apt: pkg={{ pkgs }} state=present
+
+- name: install iptables
+  template: src={{ item }} dest=/etc/iptables/{{ item }}
   with_items:
     - rules.v4
     - rules.v6
   register: firewall
-- service: name=netfilter-persistent state=restarted enabled=true
+
+- name: apply firewall
+  service: name=netfilter-persistent state=restarted enabled=true
   when: firewall.changed
+...

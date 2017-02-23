@@ -1,34 +1,46 @@
 ---
 peering:
-# external
-- name: seanode
-  addr: 74.221.208.153:25521
-  pubkey: 8hgr62ylugxjyyhxkz254qtz60p781kbswmhhywtbb5rpzc5lxj0.k
-  password: "{{ secrets.seanode.password }}"
+  # external
+  seanode:
+    name: seanode
+    addr: 74.221.208.153
+    port: 25521
+    pubkey: 8hgr62ylugxjyyhxkz254qtz60p781kbswmhhywtbb5rpzc5lxj0.k
+    password: "{{ secrets.seanode.password }}"
 
-- name: raincat
-  addr: "{{ secrets.raincat.addr }}"
-  pubkey: ru1vj8zrhfrrvx722lw9fhw4jy2xcuwt1chgxfxcs09y2skd94j0.k
-  password: "{{ secrets.raincat.password }}"
+  raincat:
+    name: raincat
+    addr: "{{ secrets.raincat.addr }}"
+    port: "{{ secrets.raincat.port }}"
+    pubkey: ru1vj8zrhfrrvx722lw9fhw4jy2xcuwt1chgxfxcs09y2skd94j0.k
+    password: "{{ secrets.raincat.password }}"
 
-# internal
-- name: yeti
-  addr: "{{ secrets.yeti.addr }}"
-  pubkey: 9jkygq92fxg3bpm7bp466gfvzg2vff5gb68uxpkg386yq8rdd5b0.k
-  password: "{{ secrets.yeti.password }}"
+  # internal
+  yeti:
+    name: yeti
+    addr: "{{ secrets.yeti.addr }}"
+    port: "{{ secrets.yeti.port }}"
+    pubkey: 9jkygq92fxg3bpm7bp466gfvzg2vff5gb68uxpkg386yq8rdd5b0.k
+    password: "{{ secrets.yeti.password }}"
 
-- name: anything
-  addr: "{{ secrets.anything.addr }}"
-  pubkey: lznblb9c6v0c0q1jgv9dw0y0judyl9hqjf52sg2p4jxkdvvlntv0.k
-  password: "{{ secrets.anything.password }}"
+  anything:
+    name: anything
+    addr: "{{ secrets.anything.addr }}"
+    port: "{{ secrets.anything.port }}"
+    pubkey: lznblb9c6v0c0q1jgv9dw0y0judyl9hqjf52sg2p4jxkdvvlntv0.k
+    password: "{{ secrets.anything.password }}"
 
-- name: decay
-  addr: "{{ secrets.decay.addr }}"
-  pubkey: jp575vqc9jzuyn4psn83gj4vkwtc131lc9hjg1gfp00p97s0wjd0.k
-  password: "{{ secrets.decay.password }}"
+  decay:
+    name: decay
+    addr: "{{ secrets.decay.addr }}"
+    port: "{{ secrets.decay.port }}"
+    pubkey: jp575vqc9jzuyn4psn83gj4vkwtc131lc9hjg1gfp00p97s0wjd0.k
+    password: "{{ secrets.decay.password }}"
 
-- name: rainbow
-  addr: "{{ secrets.rainbow.addr }}"
-  pubkey: kfjg05894y5fv1fmz2dqu30dq12k3p2qycxy7sprymr3mqz52130.k
-  password: "{{ secrets.rainbow.password }}"
+  rainbow:
+    name: rainbow
+    addr: "{{ secrets.rainbow.addr }}"
+    port: "{{ secrets.rainbow.port }}"
+    pubkey: kfjg05894y5fv1fmz2dqu30dq12k3p2qycxy7sprymr3mqz52130.k
+    password: "{{ secrets.rainbow.password }}"
 ...
