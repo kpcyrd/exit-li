@@ -5,6 +5,18 @@
     pkg: redis-server
     state: installed
 
+- name: install config
+  copy:
+    src: redis.conf
+    dest: /etc/redis/redis.conf
+  register: config
+
+- name: restart redis
+  service:
+    name: redis-server
+    state: restarted
+  when: config.changed
+
 - name: start redis
   service:
     name: redis-server
