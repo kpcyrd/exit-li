@@ -54,6 +54,10 @@ http.createServer(function(req, res) {
                 console.log('[+] connected to', dest);
                 c.pipe(socket);
                 socket.pipe(c);
+
+                socket.on('close', function() {
+                    c.end();
+                });
             });
             c.on('error', function(err) {
                 console.log('[-] connection failed', dest, err['errno']);
